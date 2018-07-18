@@ -1,29 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-
 <div>
   <label>Search:</label>
   <input #input autofocus placeholder="Film name" />
-  <!-- [(value)]="searchString" (keyup)="onKeyPress($event)"  -->
 </div>
 <div class="result">
   <ul>
-    <li *ngFor="let item of $films | async as filmsArr; index as i" id="{{item.id}}">
-      <!--{{i + 1}}/{{filmsArr.length}}-->
+    <li *ngFor="let item of $films | async as filmsArr" id="{{item.id}}">
       <span [innerHTML]="item.image_code | sanitize"></span>
-      <!--<span *ngFor="let key of this.Object.keys(item)">-->
-        <!--{{key}}: {{item[key]}}-->
-      <!--</span>-->
       <span>{{item.year}}</span>
       <h6>{{item.link_code}}</h6>
-      <!--{{item.value}}-->
-      <!--{{item.label}}-->
       <span>{{item.description}}</span>
       <span class="type">{{item.obj_type}}</span>
+      <!--{{item.value}}-->
+      <!--{{item.label}}-->
     </li>
   </ul>
 </div>

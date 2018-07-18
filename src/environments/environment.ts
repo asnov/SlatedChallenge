@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   version: require('../../package.json').version,
   apiUrl: 'https://www.slated.com/films/autocomplete/profiles/',
+  cacheTimeoutInMs: 1000 * 60 * 60 * 24,
 };
 
 /*
