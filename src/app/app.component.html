@@ -3,18 +3,27 @@
   <h1>
     Welcome to {{ title }}!
   </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<div>
+  <label>Search:</label>
+  <input #input autofocus placeholder="Film name" />
+  <!-- [(value)]="searchString" (keyup)="onKeyPress($event)"  -->
+</div>
+<div class="result">
+  <ul>
+    <li *ngFor="let item of $films | async as filmsArr; index as i" id="{{item.id}}">
+      <!--{{i + 1}}/{{filmsArr.length}}-->
+      <span [innerHTML]="item.image_code | sanitize"></span>
+      <!--<span *ngFor="let key of this.Object.keys(item)">-->
+        <!--{{key}}: {{item[key]}}-->
+      <!--</span>-->
+      <span>{{item.year}}</span>
+      <h6>{{item.link_code}}</h6>
+      <!--{{item.value}}-->
+      <!--{{item.label}}-->
+      <span>{{item.description}}</span>
+      <span class="type">{{item.obj_type}}</span>
+    </li>
+  </ul>
+</div>

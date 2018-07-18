@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  version: require('../../package.json').version,
+  apiUrl: 'https://www.slated.com/films/autocomplete/profiles/',
 };
 
 /*
