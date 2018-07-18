@@ -6,10 +6,6 @@ import { SanitizePipe } from './pipes/sanitize.pipe';
 
 
 const getFilmsServiceStub: Partial<GetFilmsService> = {
-  name: 'zzz',
-  // getFilmsByName(name: string) {
-  //   this.name = name;
-  // },
   getFilmsByName: jasmine.createSpy(),
 };
 

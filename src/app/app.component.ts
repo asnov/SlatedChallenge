@@ -3,7 +3,7 @@ import { GetFilmsService } from './get-films.service';
 import { FilmObj } from '../data/models';
 import { fromEvent, Observable } from 'rxjs';
 import { SanitizePipe } from './pipes/sanitize.pipe';
-import { concatMap, distinctUntilChanged, map, mergeMap, switchMap } from 'rxjs/operators';
+import { concatMap, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +16,6 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
 
-  public searchString = '';
-  $keyEvent: Observable<Event>;
-  $searchString: Observable<string>;
   $films: Observable<FilmObj[]>;
 
   constructor(private getFilmsService: GetFilmsService) {
@@ -26,19 +23,16 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
 
-    this.$keyEvent = fromEvent<KeyboardEvent>(this.input.nativeElement, 'keyup');
+    const $keyEvent: Observable<Event> = fromEvent<KeyboardEvent>(this.input.nativeElement, 'keyup');
 
-    this.$searchString = this.$keyEvent.pipe(
+    const $searchString: Observable<string> = $keyEvent.pipe(
       map(event => event.target as HTMLInputElement),
       map(element => element.value.toLowerCase().trim()),
       distinctUntilChanged(),
     );
 
-    this.$films = this.$searchString.pipe(
-      switchMap(string => this.getFilmsService.getFilmsByName(string)),
-      // map(string => this.getFilmsService.getFilmsByName(string)),
-      // mergeMap(string => this.getFilmsService.getFilmsByName(string)),
-      // concatMap(string => this.getFilmsService.getFilmsByName(string)),
+    this.$films = $searchString.pipe(
+      concatMap(string => this.getFilmsService.getFilmsByName(string)),
     );
 
   }
