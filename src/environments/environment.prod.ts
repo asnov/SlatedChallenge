@@ -1,7 +1,7 @@
 const packageJson = require('../../package.json');
 
 export const environment = {
-  production: false,
+  production: true,
   config: packageJson,
   repoUrl: packageJson.bugs.url.replace(/issues$/, ''),
   authorUrl: /\((http.*)\)/.exec(packageJson.author)[1],
