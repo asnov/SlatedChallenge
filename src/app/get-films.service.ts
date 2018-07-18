@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment';
-import { FilmCache, FilmObj } from '../data/models';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
+import { environment } from '../environments/environment';
+import { FilmCache, FilmObj } from '../data/models';
+import { preparedFilmCache } from '../data/tests.spec';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetFilmsService {
 
-  filmCache: FilmCache = {};
+  filmCache: FilmCache = environment.production ?
+    {} :
+    preparedFilmCache;
 
   constructor(private http: HttpClient) {
   }

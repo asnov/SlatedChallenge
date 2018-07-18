@@ -3,7 +3,7 @@ import { GetFilmsService } from './get-films.service';
 import { FilmObj } from '../data/models';
 import { fromEvent, Observable } from 'rxjs';
 import { SanitizePipe } from './pipes/sanitize.pipe';
-import { concatMap, distinctUntilChanged, map } from 'rxjs/operators';
+import { concatMap, distinctUntilChanged, map, startWith, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
 @Component({
@@ -13,12 +13,13 @@ import { environment } from '../environments/environment';
   providers: [GetFilmsService, SanitizePipe],
 })
 export class AppComponent implements AfterViewInit {
+  environment = environment;
 
   @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
 
-  repoUrl = environment.repoUrl;
   $films: Observable<FilmObj[]>;
+  searchString = '';
 
   constructor(private getFilmsService: GetFilmsService) {
   }
@@ -29,7 +30,12 @@ export class AppComponent implements AfterViewInit {
 
     const $searchString: Observable<string> = $keyEvent.pipe(
       map(event => event.target as HTMLInputElement),
-      map(element => element.value.toLowerCase().trim()),
+      map(element => element.value),
+      startWith(environment.production ? '' : 'Film'),
+      tap(value => {
+        this.searchString = value;
+      }),
+      map(value => value.toLowerCase().trim()),
       distinctUntilChanged(),
     );
 

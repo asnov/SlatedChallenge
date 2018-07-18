@@ -1,22 +1,60 @@
-<div>
+<header>
+  <h1>
+    {{environment.config.description}}
+  </h1>
   <p>
-    The code repository is <a href="{{repoUrl}}">here</a>.
+    The code repository is <a [href]="environment.repoUrl">here</a>.
   </p>
-</div>
-<div>
-  <label>Search:</label>
-  <input #input autofocus placeholder="Film name"/>
-</div>
-<div class="result">
-  <ul>
-    <li *ngFor="let item of $films | async as filmsArr" id="{{item.id}}">
-      <span [innerHTML]="item.image_code | sanitize"></span>
-      <span>{{item.year}}</span>
-      <h6>{{item.link_code}}</h6>
-      <span>{{item.description}}</span>
-      <span class="type">{{item.obj_type}}</span>
-      <!--{{item.value}}-->
-      <!--{{item.label}}-->
-    </li>
-  </ul>
-</div>
+</header>
+
+
+<section>
+
+  <div>
+    <label>Search: </label>
+    <input #input autofocus placeholder="Film name"/>
+  </div>
+
+  <div class="result" *ngIf="($films | async) as films">
+
+    <div *ngIf="films.length; else noMatches">
+      <ul>
+        <li *ngFor="let item of films" id="{{item.id}}">
+
+          <div class="picture" [innerHTML]="item.image_code | sanitize">
+          </div>
+
+          <div class="description">
+            <p>
+          <span class="type">
+            {{item.year}}
+            {{item.obj_type}}
+          </span>
+              <span class="bold">{{item.link_code}}</span>
+            </p>
+            <p>{{item.description}}</p>
+          </div>
+
+          <br/>
+        </li>
+      </ul>
+      <p>{{films.length}} items.</p>
+    </div>
+
+    <ng-template #noMatches>
+      <p>
+        No matches for "{{searchString}}".
+      </p>
+    </ng-template>
+
+  </div>
+
+</section>
+
+
+<footer>
+  <hr>
+  <a [href]="environment.authorUrl">
+    {{environment.config.author}}
+  </a>
+</footer>

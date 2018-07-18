@@ -1,5 +1,36 @@
+:host > * {
+  padding-left: 40px;
+}
 
 .result {
+  ul {
+    padding-left: 0;
+
+    li {
+
+      list-style-type: none;
+      margin-bottom: 16px;
+
+      div.picture {
+        float: left;
+        margin-right: 10px;
+      }
+
+      div.description {
+        float: left;
+        width: 90%;
+
+        p {
+          margin-top: 0;
+          margin-bottom: 8px;
+        }
+      }
+
+      br {
+        clear: both;
+      }
+    }
+  }
 
   .type {
     color: #aeaeb0;
@@ -7,3 +38,11 @@
 
 }
 
+.bold {
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 80px;
+  text-align: right;
+}
