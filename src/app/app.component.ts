@@ -4,6 +4,7 @@ import { FilmObj } from '../data/models';
 import { fromEvent, Observable } from 'rxjs';
 import { SanitizePipe } from './pipes/sanitize.pipe';
 import { concatMap, distinctUntilChanged, map } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('input')
   input: ElementRef<HTMLInputElement>;
 
+  repoUrl = environment.repoUrl;
   $films: Observable<FilmObj[]>;
 
   constructor(private getFilmsService: GetFilmsService) {
