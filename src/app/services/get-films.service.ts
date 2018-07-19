@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { environment } from '../environments/environment';
-import { FilmCache, FilmObj } from '../data/models';
-import { preparedFilmCache } from '../data/tests.spec';
+import { environment } from '../../environments/environment';
+import { FilmCache, FilmObj } from '../../data/models';
+import { preparedFilmCache } from '../../data/tests.spec';
 
 
 @Injectable({

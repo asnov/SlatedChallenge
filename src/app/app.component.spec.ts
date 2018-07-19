@@ -1,6 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { GetFilmsService } from './get-films.service';
+import { GetFilmsService } from './services/get-films.service';
 import { HttpClient } from '@angular/common/http';
 import { SanitizePipe } from './pipes/sanitize.pipe';
 

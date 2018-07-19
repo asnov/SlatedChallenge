@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { GetFilmsService } from './get-films.service';
-import { FilmObj } from '../data/models';
 import { fromEvent, Observable } from 'rxjs';
-import { SanitizePipe } from './pipes/sanitize.pipe';
 import { concatMap, distinctUntilChanged, map, startWith, tap } from 'rxjs/operators';
+
 import { environment } from '../environments/environment';
+import { GetFilmsService } from './services/get-films.service';
+import { FilmObj } from '../data/models';
+import { SanitizePipe } from './pipes/sanitize.pipe';
+
 
 @Component({
   selector: 'app-root',
@@ -31,7 +33,7 @@ export class AppComponent implements AfterViewInit {
     const $searchString: Observable<string> = $keyEvent.pipe(
       map(event => event.target as HTMLInputElement),
       map(element => element.value),
-      startWith(environment.production ? '' : 'Film'),
+      // startWith(environment.production ? '' : 'Film'),
       tap(value => {
         this.searchString = value;
       }),

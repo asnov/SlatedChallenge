@@ -1,60 +1,26 @@
 <header>
-  <h1>
-    {{environment.config.description}}
-  </h1>
-  <p>
-    The code repository is <a [href]="environment.repoUrl">here</a>.
-  </p>
+  <h1>{{environment.config.description}}</h1>
+  <p>The code repository is <a [href]="environment.repoUrl">here</a>.</p>
 </header>
 
+<main>
 
-<section>
-
-  <div>
+  <section>
     <label>Search: </label>
     <input #input autofocus placeholder="Film name"/>
-  </div>
+  </section>
 
-  <div class="result" *ngIf="($films | async) as films">
+  <section *ngIf="($films | async) as films">
+    <app-film-list [$films]="$films"></app-film-list>
 
-    <div *ngIf="films.length; else noMatches">
-      <ul>
-        <li *ngFor="let item of films" id="{{item.id}}">
-
-          <div class="picture" [innerHTML]="item.image_code | sanitize">
-          </div>
-
-          <div class="description">
-            <p>
-          <span class="type">
-            {{item.year}}
-            {{item.obj_type}}
-          </span>
-              <span class="bold">{{item.link_code}}</span>
-            </p>
-            <p>{{item.description}}</p>
-          </div>
-
-          <br/>
-        </li>
-      </ul>
-      <p>{{films.length}} items.</p>
+    <div ng-if="!films.length">
+      <p>No matches for "{{searchString}}".</p>
     </div>
+  </section>
 
-    <ng-template #noMatches>
-      <p>
-        No matches for "{{searchString}}".
-      </p>
-    </ng-template>
-
-  </div>
-
-</section>
-
+</main>
 
 <footer>
   <hr>
-  <a [href]="environment.authorUrl">
-    {{environment.config.author}}
-  </a>
+  <a [href]="environment.authorUrl">{{environment.config.author}}</a>
 </footer>
