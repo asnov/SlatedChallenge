@@ -3,6 +3,7 @@
   <p>The code repository is <a [href]="environment.repoUrl">here</a>.</p>
 </header>
 
+
 <main>
 
   <section>
@@ -11,14 +12,17 @@
   </section>
 
   <section *ngIf="($films | async) as films">
-    <app-film-list [$films]="$films"></app-film-list>
-
-    <div ng-if="!films.length">
-      <p>No matches for "{{searchString}}".</p>
+    <div *ngIf="films.length; else noMatches">
+      <app-film-list [films]="films"></app-film-list>
     </div>
+
+    <ng-template #noMatches>
+      <p>No matches for "{{searchString}}".</p>
+    </ng-template>
   </section>
 
 </main>
+
 
 <footer>
   <hr>

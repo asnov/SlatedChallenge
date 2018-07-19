@@ -1,14 +1,8 @@
-<div *ngIf="($films | async) as films">
+<ul>
+  <li *ngFor="let item of films" id="{{item.id}}">
 
-  <div *ngIf="films.length">
-    <ul>
-      <li *ngFor="let item of films" id="{{item.id}}">
+    <app-film-entry [item]="item"></app-film-entry>
 
-        <app-film-entry [item]="item"></app-film-entry>
-
-      </li>
-    </ul>
-    <p>{{films.length}} items.</p>
-  </div>
-
-</div>
+  </li>
+</ul>
+<p>{{films.length}} items.</p>

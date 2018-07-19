@@ -1,5 +1,6 @@
 # SlatedChallenge
-Slated, Inc. Frontend Technical Challenge
+Slated, Inc. Frontend Technical Challenge  
+  
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server

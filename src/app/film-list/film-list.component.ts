@@ -1,5 +1,4 @@
 import { Component, Input} from '@angular/core';
-import { Observable } from 'rxjs';
 import { FilmObj } from '../../data/models';
 
 @Component({
@@ -10,7 +9,7 @@ import { FilmObj } from '../../data/models';
 export class FilmListComponent {
 
   @Input()
-  $films: Observable<FilmObj[]>;
+  films: FilmObj[];
 
   constructor() { }
 
