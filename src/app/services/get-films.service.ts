@@ -5,11 +5,11 @@ import { tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { FilmCache, FilmObj } from '../../data/models';
-import { preparedFilmCache } from '../../data/tests.spec';
+import { preparedFilmCache } from '../../data/testData';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GetFilmsService {
 

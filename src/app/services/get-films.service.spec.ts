@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
 
 import { GetFilmsService } from './get-films.service';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 
@@ -16,10 +16,18 @@ let httpClientSpy: {
 describe('GetFilmsService', () => {
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'jsonp']);
+    httpClientSpy = {
+      get: jasmine.createSpy().and.stub(),
+      jsonp: jasmine.createSpy().and.returnValue({
+        pipe: () => ({}),
+      }),
+    };
+
     TestBed.configureTestingModule({
-      providers: [GetFilmsService,
-        {provide: HttpClient, useValue: httpClientSpy}]
+      providers: [
+        GetFilmsService,
+        {provide: HttpClient, useValue: httpClientSpy},
+      ]
     });
   });
 

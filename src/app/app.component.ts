@@ -5,14 +5,13 @@ import { catchError, concatMap, distinctUntilChanged, finalize, map, startWith, 
 import { environment } from '../environments/environment';
 import { GetFilmsService } from './services/get-films.service';
 import { FilmObj } from '../data/models';
-import { SanitizePipe } from './pipes/sanitize.pipe';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [GetFilmsService, SanitizePipe],
+  providers: [GetFilmsService],
 })
 export class AppComponent implements AfterViewInit {
   environment = environment;
@@ -44,8 +43,8 @@ export class AppComponent implements AfterViewInit {
 
     this.$films = $searchString.pipe(
       tap(() => this.isLoaded = false),
-      // concatMap(
-      switchMap(
+      concatMap(
+      // switchMap(
         string => this.getFilmsService.getFilmsByName(string).pipe(
           finalize(() => this.isLoaded = true),
         )),
