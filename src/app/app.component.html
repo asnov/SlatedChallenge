@@ -12,13 +12,21 @@
   </section>
 
   <section *ngIf="($films | async) as films">
-    <div *ngIf="films.length; else noMatches">
-      <app-film-list [films]="films"></app-film-list>
+
+    <div *ngIf="isLoading; else ready">
+      <p>Loading...</p>
     </div>
 
-    <ng-template #noMatches>
-      <p>No matches for "{{searchString}}".</p>
+    <ng-template #ready>
+      <div *ngIf="films.length; else noMatches">
+        <app-film-list [films]="films"></app-film-list>
+      </div>
+
+      <ng-template #noMatches>
+        <p>No matches for "{{searchString}}".</p>
+      </ng-template>
     </ng-template>
+
   </section>
 
 </main>
