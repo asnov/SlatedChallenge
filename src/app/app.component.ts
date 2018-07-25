@@ -22,7 +22,7 @@ export class AppComponent implements AfterViewInit {
 
   $films: Observable<FilmObj[]>;
   searchString = '';
-  isLoading = false;
+  isLoaded = true;
 
   constructor(private getFilmsService: GetFilmsService) {
   }
@@ -43,10 +43,11 @@ export class AppComponent implements AfterViewInit {
     );
 
     this.$films = $searchString.pipe(
-      tap(() => this.isLoading = true),
-      concatMap(
+      tap(() => this.isLoaded = false),
+      // concatMap(
+      switchMap(
         string => this.getFilmsService.getFilmsByName(string).pipe(
-          finalize(() => this.isLoading = false),
+          finalize(() => this.isLoaded = true),
         )),
       catchError(() => of([])),
     );

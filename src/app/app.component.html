@@ -11,13 +11,9 @@
     <input #input autofocus placeholder="Film name"/>
   </section>
 
-  <section *ngIf="($films | async) as films">
+  <section *ngIf="$films | async as films">
 
-    <div *ngIf="isLoading; else ready">
-      <p>Loading...</p>
-    </div>
-
-    <ng-template #ready>
+    <div *ngIf="isLoaded; else spinner">
       <div *ngIf="films.length; else noMatches">
         <app-film-list [films]="films"></app-film-list>
       </div>
@@ -25,6 +21,10 @@
       <ng-template #noMatches>
         <p>No matches for "{{searchString}}".</p>
       </ng-template>
+    </div>
+
+    <ng-template #spinner>
+      <p>Loading...</p>
     </ng-template>
 
   </section>
