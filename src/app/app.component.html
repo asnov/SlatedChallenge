@@ -1,6 +1,8 @@
 <header>
   <h1>{{environment.config.description}}</h1>
-  <p>The code repository is <a [href]="environment.repoUrl">here</a>.</p>
+  <p>
+    The code repository is <a [href]="environment.repoUrl">here</a>.
+  </p>
 </header>
 
 
@@ -11,14 +13,24 @@
     <input #input autofocus placeholder="Film name"/>
   </section>
 
-  <section *ngIf="($films | async) as films">
-    <div *ngIf="films.length; else noMatches">
-      <app-film-list [films]="films"></app-film-list>
+  <section *ngIf="$films | async as films">
+
+    <div *ngIf="isLoaded$ | async as isLoaded; else spinner" title="isLoaded={{isLoaded}}">
+      <div *ngIf="films.length; else noMatches">
+        <app-film-list [films]="films"></app-film-list>
+      </div>
+
+      <ng-template #noMatches>
+        <p>
+          No matches for "{{searchString}}".
+        </p>
+      </ng-template>
     </div>
 
-    <ng-template #noMatches>
-      <p>No matches for "{{searchString}}".</p>
+    <ng-template #spinner>
+      <app-spinner></app-spinner>
     </ng-template>
+
   </section>
 
 </main>

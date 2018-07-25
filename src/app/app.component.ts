@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
+import { fromEvent, merge, Observable } from 'rxjs';
 import { concatMap, distinctUntilChanged, map, startWith, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
@@ -22,6 +22,7 @@ export class AppComponent implements AfterViewInit {
 
   $films: Observable<FilmObj[]>;
   searchString = '';
+  isLoaded$: Observable<boolean>;
 
   constructor(private getFilmsService: GetFilmsService) {
   }
@@ -43,6 +44,19 @@ export class AppComponent implements AfterViewInit {
 
     this.$films = $searchString.pipe(
       concatMap(string => this.getFilmsService.getFilmsByName(string)),
+    );
+
+    let requestsInProcess = 0;
+    this.isLoaded$ = merge($searchString, this.$films).pipe(
+      map(value => {
+        if (typeof value === 'string') {
+          requestsInProcess++;
+        } else {
+          requestsInProcess--;
+        }
+        console.log(`requestsInProcess:`, requestsInProcess);
+        return requestsInProcess === 0;
+      }),
     );
 
   }
