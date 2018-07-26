@@ -11,23 +11,24 @@
     <input #input autofocus placeholder="Film name"/>
   </section>
 
-  <section *ngIf="$films | async as films">
+  <section *ngIf="($films | async) as films">
 
-    <div *ngIf="isLoaded; else spinner">
-      <div *ngIf="films.length; else noMatches">
-        <app-film-list [films]="films"></app-film-list>
-      </div>
-
-      <ng-template #noMatches>
-        <p>No matches for "{{searchString}}".</p>
-      </ng-template>
+    <div *ngIf="films.length; else noMatches">
+      <app-film-list [films]="films"></app-film-list>
     </div>
 
-    <ng-template #spinner>
-      <p>Loading...</p>
+    <ng-template #noMatches>
+      <p>No matches for "{{searchString}}".</p>
     </ng-template>
 
   </section>
+
+
+  <div class="spinner-background" [hidden]="!(isLoading$ | async)">
+    <div class="spinner-content">
+      <p>Loading...</p>
+    </div>
+  </div>
 
 </main>
 

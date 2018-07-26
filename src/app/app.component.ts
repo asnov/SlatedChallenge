@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { fromEvent, Observable, of } from 'rxjs';
-import { catchError, concatMap, distinctUntilChanged, finalize, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { fromEvent, merge, Observable } from 'rxjs';
+import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 import { GetFilmsService } from './services/get-films.service';
@@ -21,10 +21,9 @@ export class AppComponent implements AfterViewInit {
 
   $films: Observable<FilmObj[]>;
   searchString = '';
-  isLoaded = true;
+  isLoading$: Observable<boolean>;
 
-  constructor(private getFilmsService: GetFilmsService) {
-  }
+  constructor(private getFilmsService: GetFilmsService) { }
 
   ngAfterViewInit() {
 
@@ -42,13 +41,12 @@ export class AppComponent implements AfterViewInit {
     );
 
     this.$films = $searchString.pipe(
-      tap(() => this.isLoaded = false),
-      concatMap(
-      // switchMap(
-        string => this.getFilmsService.getFilmsByName(string).pipe(
-          finalize(() => this.isLoaded = true),
-        )),
-      catchError(() => of([])),
+      switchMap(string => this.getFilmsService.getFilmsByName(string)),
+    );
+
+    this.isLoading$ = merge(
+      $searchString.pipe(map(() => true)),
+      this.$films.pipe(map(() => false)),
     );
 
   }
